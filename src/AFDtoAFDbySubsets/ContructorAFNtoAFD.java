@@ -142,24 +142,22 @@ public class ContructorAFNtoAFD {
     public Subconjunto mover(String claveValor,Subconjunto subconjunto,String valor,Automata srcAutomata){
         Subconjunto resultante= new Subconjunto(claveValor);
         for (String estado:subconjunto.getKernel()) {
+            System.out.println(estado+"    "+estado.equals(srcAutomata.getEstadoFinal(srcAutomata).getClave()));
+            if(estado.equals(srcAutomata.getEstadoFinal(srcAutomata).getClave())){
+                subconjunto.getEstado().setEsFinal(true);
+            }
             for (Transicion transicion:srcAutomata.getEstado(estado).getTransiciones()) {
                 if(transicion.getValorAceptado().equals(valor)){
-                    if(transicion.getEstadoDeDestino().isFinal()){
-                        resultante.getEstado().setEsFinal(true);
-                        System.out.println("vamos a aver");
-
-                    }
                     resultante.getKernel().add(transicion.getEstadoDeDestino().getClave());
                 }
             }
         }
         for (String estado:subconjunto.getCerradura()) {
+            if(estado.equals(srcAutomata.getEstadoFinal(srcAutomata).getClave())){
+                subconjunto.getEstado().setEsFinal(true);
+            }
             for (Transicion transicion:srcAutomata.getEstado(estado).getTransiciones()) {
                 if(transicion.getValorAceptado().equals(valor)){
-                    if(transicion.getEstadoDeDestino().isFinal()){
-                        resultante.getEstado().setEsFinal(true);
-                        System.out.println("vamos a aver");
-                    }
                     resultante.getKernel().add(transicion.getEstadoDeDestino().getClave());
                 }
             }
@@ -172,10 +170,9 @@ public class ContructorAFNtoAFD {
     ///////////////////////////Trabajan en conjunto/////////////////////////////////////
     public Subconjunto cerraduraEpsilon(Subconjunto subconjunto,Automata srcAutomata){
         for(String estado:subconjunto.getKernel()){
-            if(srcAutomata.getEstado(estado).isFinal()){
-                subconjunto.getEstado().setEsFinal(true);
-                System.out.println("vamos a aver");
 
+            if(estado.equals(srcAutomata.getEstadoFinal(srcAutomata).getClave())){
+                subconjunto.getEstado().setEsFinal(true);
             }
             cerraduraEpsilon(estado,srcAutomata,subconjunto.getCerradura());
         }

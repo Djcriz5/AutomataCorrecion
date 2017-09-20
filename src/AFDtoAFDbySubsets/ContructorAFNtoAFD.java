@@ -123,10 +123,10 @@ public class ContructorAFNtoAFD {
                                 System.out.println(iteracion.getKernel() + "  " + iteracion.getCerradura() + "\n");
                                 automataResultante.addTransicion(procesandose.getEstado(), procesandose.getEstado(), simbolo);
                             }else {
-                                System.out.println("''''''___Se añadio la transicion  " + simbolo);
-                                System.out.println(procesandose.getEstado().getClave() + " -" + simbolo + "-> " + iteracion.getEstado().getClave());
+                                System.out.println("''++'''___Se añadio la transicion  " + simbolo);
+                                System.out.println(procesandose.getEstado().getClave() + " -" + simbolo + "-> " + estadosProcesados.get(estadosProcesados.indexOf(iteracion)).getEstado().getClave());
                                 System.out.println(iteracion.getKernel() + "  " + iteracion.getCerradura() + "\n");
-                                automataResultante.addTransicion(procesandose.getEstado(), iteracion.getEstado(), simbolo);
+                                automataResultante.addTransicion(procesandose.getEstado(),estadosProcesados.get(estadosProcesados.indexOf(iteracion)).getEstado(), simbolo);
                             }
                         }
                         contadorEstadosAutoR--;

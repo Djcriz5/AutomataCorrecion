@@ -55,37 +55,21 @@ public class ContructorAFNtoAFD {
         while(!estadosPorProcesarStack.isEmpty()){
             procesandose=estadosPorProcesarStack.removeLast();
             estadosProcesados.add(procesandose);
-            System.out.println("Procesandose :\n");
-
-             System.out.println(procesandose.getKernel() +"  "+ procesandose.getCerradura()+"\n");
              for (String simbolo:srcAutomata.getAlfabetoSinEpsilon()) {
-
                  iteracion=cerraduraEpsilon(mover(Integer.toString(++contadorEstadosAutoR),procesandose,simbolo,srcAutomata),srcAutomata);
-
                  if(!estadosPorProcesarStack.contains(iteracion)&&!estadosProcesados.contains(iteracion)&&!iteracion.getKernel().isEmpty()){
-                     System.out.println("****___Se añadio la Iteracion "+simbolo);
-                     System.out.println(procesandose.getEstado().getClave()+" -"+simbolo+"-> "+iteracion.getEstado().getClave());
-                     System.out.println(iteracion.getKernel() +"  "+ iteracion.getCerradura()+"\n");
-
                      estadosPorProcesarStack.addFirst(iteracion);
                      automataResultante.addEstado(iteracion.getEstado());
                      automataResultante.addTransicion(procesandose.getEstado(),iteracion.getEstado(),simbolo);
                  }else if(!iteracion.getKernel().isEmpty()){
                         if(estadosPorProcesarStack.contains(iteracion)){
-                            System.out.println("!!!!!___Se añadio la transicion  "+simbolo);
-                            System.out.println(procesandose.getEstado().getClave()+" -"+simbolo+"-> "+iteracion.getEstado().getClave());
-                            System.out.println(iteracion.getKernel() +"  "+ iteracion.getCerradura()+"\n");
                             automataResultante.addTransicion(procesandose.getEstado(),estadosPorProcesarStack.get(estadosPorProcesarStack.indexOf(iteracion)).getEstado(),simbolo);
                         }else if(estadosProcesados.contains(iteracion)){
                             if(iteracion.equals(procesandose)){
-                                System.out.println("''''''___Se añadio la transicion  " + simbolo);
-                                System.out.println(procesandose.getEstado().getClave() + " -" + simbolo + "-> " + iteracion.getEstado().getClave());
-                                System.out.println(iteracion.getKernel() + "  " + iteracion.getCerradura() + "\n");
+
                                 automataResultante.addTransicion(procesandose.getEstado(), procesandose.getEstado(), simbolo);
                             }else {
-                                System.out.println("''++'''___Se añadio la transicion  " + simbolo);
-                                System.out.println(procesandose.getEstado().getClave() + " -" + simbolo + "-> " + estadosProcesados.get(estadosProcesados.indexOf(iteracion)).getEstado().getClave());
-                                System.out.println(iteracion.getKernel() + "  " + iteracion.getCerradura() + "\n");
+
                                 automataResultante.addTransicion(procesandose.getEstado(),estadosProcesados.get(estadosProcesados.indexOf(iteracion)).getEstado(), simbolo);
                             }
                         }
@@ -101,36 +85,28 @@ public class ContructorAFNtoAFD {
 
     public Subconjunto mover(String claveValor,Subconjunto subconjunto,String valor,Automata srcAutomata){
         Subconjunto resultante= new Subconjunto(claveValor);
-        for (String estado:subconjunto.getKernel()) {
-            System.out.println(estado+"    "+estado.equals(srcAutomata.getEstadoFinal(srcAutomata).getClave()));
-            if(estado.equals(srcAutomata.getEstadoFinal(srcAutomata).getClave())){
-                subconjunto.getEstado().setEsFinal(true);
-            }
-            for (Transicion transicion:srcAutomata.getEstado(estado).getTransiciones()) {
-                if(transicion.getValorAceptado().equals(valor)){
-                    resultante.getKernel().add(transicion.getEstadoDeDestino().getClave());
-                }
-            }
-        }
-        for (String estado:subconjunto.getCerradura()) {
-            if(estado.equals(srcAutomata.getEstadoFinal(srcAutomata).getClave())){
-                subconjunto.getEstado().setEsFinal(true);
-            }
-            for (Transicion transicion:srcAutomata.getEstado(estado).getTransiciones()) {
-                if(transicion.getValorAceptado().equals(valor)){
-                    resultante.getKernel().add(transicion.getEstadoDeDestino().getClave());
-                }
-            }
-        }
+        mover(subconjunto,resultante,subconjunto.getKernel(),srcAutomata,valor);
+        mover(subconjunto,resultante,subconjunto.getCerradura(),srcAutomata,valor);
         return  resultante;
     }
 
+    private void  mover(Subconjunto srcSubcojunto,Subconjunto dstSubconjunto,Set<String> setAProcesar,Automata srcAutomata,String valor){
+        for (String estado:setAProcesar) {
+            if(estado.equals(srcAutomata.getEstadoFinal(srcAutomata).getClave())){
+                srcSubcojunto.getEstado().setEsFinal(true);
+            }
+            for (Transicion transicion:srcAutomata.getEstado(estado).getTransiciones()) {
+                if(transicion.getValorAceptado().equals(valor)){
+                    dstSubconjunto.getKernel().add(transicion.getEstadoDeDestino().getClave());
+                }
+            }
+        }
+    }
 
 
     ///////////////////////////Trabajan en conjunto/////////////////////////////////////
     public Subconjunto cerraduraEpsilon(Subconjunto subconjunto,Automata srcAutomata){
         for(String estado:subconjunto.getKernel()){
-
             if(estado.equals(srcAutomata.getEstadoFinal(srcAutomata).getClave())){
                 subconjunto.getEstado().setEsFinal(true);
             }
@@ -145,7 +121,6 @@ public class ContructorAFNtoAFD {
             if(transicion.getValorAceptado().equals("")){
                 cerraduraDestino.add(transicion.getEstadoDeDestino().getClave());
                 cerraduraEpsilon(transicion.getEstadoDeDestino().getClave(),srcAutomata,cerraduraDestino);
-
             }
         }
     }

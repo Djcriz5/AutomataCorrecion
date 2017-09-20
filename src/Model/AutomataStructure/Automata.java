@@ -1,6 +1,8 @@
 package Model.AutomataStructure;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * Created by criscastro on 22/08/17.
@@ -9,9 +11,11 @@ public class Automata {
     private LinkedList<Estado> estadosMaquina;
     private Estado estadoInicial;
     private int numeroEstados;
+    private Set<String> alfabeto;
     public Automata(){
        this.estadosMaquina=new LinkedList<>();
        this.numeroEstados=0;
+       this.alfabeto= new HashSet<>();
     }
     public void addEstado(Estado estado){
         this.estadosMaquina.add(estado);
@@ -42,8 +46,6 @@ public class Automata {
             }
             estado.setAceptoLaCadena(false);
             estado.setVisitado(false);
-           // System.out.println("limpiando estado: "+estado.getClave() );
-           // System.out.println("tamano : "+estadosMaquina.size() );
 
         }
         return  resultado;
@@ -51,6 +53,14 @@ public class Automata {
     public void addEstadoInicial(Estado estado){
        this.addEstado(estado);
        this.setEstadoInicial(estado);
+    }
+
+    public void addEstadoInicial(){
+            Estado estado =new Estado(String.valueOf(estadosMaquina.size()+1));
+            this.addEstado(estado);
+            this.setEstadoInicial(estado);
+            estado=null;
+            System.gc();
     }
 
     public void addEstado(boolean esFinal){
@@ -101,14 +111,14 @@ public class Automata {
         StringBuilder builder =new StringBuilder();
         //para fines educativos eliminar estas 2 lineas
         builder.append("\nEstado Inicial: "+this.getEstadoInicial().getClave());
-        builder.append("\nEstado Final: "+this.getEstadoFinal(this).getClave());
+      //  builder.append("\nEstado Final: "+this.getEstadoFinal(this).getClave());
         builder.append("\nNumero de estados: "+getNumeroEstados());
         for (Estado e:this.estadosMaquina) {
             builder.append(e.toString());
         }
         return builder.toString();
     }
-/// para fines educativos eliminar
+/// solo aplica par automatas de thompson
     public Estado getEstadoFinal(Automata automata){
         Estado resultado=null;
         for (Estado estado:automata.getEstadosMaquina()) {
@@ -117,5 +127,38 @@ public class Automata {
             }
         }
         return resultado;
+    }
+
+    private void calcularAlfabeto(){
+        for (Estado estado:estadosMaquina) {
+            for (Transicion transicion:estado.getTransiciones()) {
+                    this.alfabeto.add(transicion.getValorAceptado());
+            }
+        }
+    }
+    private void calcularAlfabetoSinEpsilon(){
+        for (Estado estado:estadosMaquina) {
+            for (Transicion transicion:estado.getTransiciones()) {
+                if(!transicion.getValorAceptado().equals(""))
+                this.alfabeto.add(transicion.getValorAceptado());
+            }
+        }
+    }
+
+    public Set<String> getAlfabeto(){
+        if(this.alfabeto.isEmpty()){
+            calcularAlfabeto();
+        }
+        return this.alfabeto;
+    }
+    public Set<String> getAlfabetoSinEpsilon(){
+        if(this.alfabeto.isEmpty()){
+            calcularAlfabetoSinEpsilon();
+        }
+        return this.alfabeto;
+    }
+
+    public  Estado getEstado(String clave){
+            return this.estadosMaquina.get(estadosMaquina.indexOf(new Estado(clave)));
     }
 }

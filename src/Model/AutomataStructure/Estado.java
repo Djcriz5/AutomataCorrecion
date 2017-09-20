@@ -1,5 +1,7 @@
 package Model.AutomataStructure;
 
+import AFDtoAFDbySubsets.Subconjunto;
+
 import java.util.LinkedList;
 
 /**
@@ -16,7 +18,7 @@ public class Estado {
         this.clave=clave;
         this.visitado=false;
         this.esFinal=esFinal;
-        this.aceptaCadena=false;
+        this.aceptaCadena=true;
         transiciones = new LinkedList<>();
     }
     public Estado(String clave){
@@ -165,10 +167,18 @@ public class Estado {
     }
     public String toString(){
         StringBuilder builder =new StringBuilder();
-        builder.append("\nEstado "+this.getClave()+" es final: "+this.isFinal()+"transiciones\n");
+        builder.append("\nEstado "+this.getClave()+" es final: "+this.isFinal()+"\ntransiciones\n");
         for (Transicion t:this.transiciones) {
             builder.append("\n"+t.toString()+"\n");
         }
         return builder.toString();
+    }
+        //solucion temporal solo checa si  el nombre es el mismo pero relamente debria ver si las transiciones son las mismas tambien
+    @Override
+    public boolean equals(Object obj) {
+        if (this.clave.equals(((Estado) obj).getClave()))
+            return true;
+        else
+            return false;
     }
 }

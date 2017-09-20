@@ -59,7 +59,7 @@ public class ConstructorDeAutomatas {
          System.gc();
         return resultante;
     }
-
+    //TODO implementar epsilon elijir un caracter que lo represente , despues en cada construccion poner que si el simbolo es el que representa a epsilon , al crear las transiciones que sean con ""
 
     /**
      * Entrada:

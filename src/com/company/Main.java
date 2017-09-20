@@ -1,11 +1,15 @@
 package com.company;
 
 
+import AFDtoAFDbySubsets.ContructorAFNtoAFD;
+import AFDtoAFDbySubsets.Subconjunto;
 import ExpresionRegularToAFN.ConstructorDeAutomatas;
 import ExpresionRegularToAFN.ShuntingYard;
 import Model.AutomataStructure.Automata;
 import Model.AutomataStructure.Estado;
 import Model.AutomataStructure.Transicion;
+
+import java.util.*;
 
 public class Main {
 
@@ -92,9 +96,68 @@ public class Main {
        // System.out.println(cA.aConcatenacionFusionDeEstados(cA.contruccionbasica("a"),cA.contruccionbasica("b")));
 
      //System.out.println(cA.expresionRegularToAutomata("((b.c.d)*|f+.a).f"));
-     System.out.println(cA.expresionRegularToAutomata("((a.a+)|(c+)|(b.c*))+"));
- //     System.out.println(cA.expresionRegularToAutomata("a.b"));
+    // System.out.println(cA.expresionRegularToAutomata("((a.a+)|(c+)|(b.c*))+"));
 
-     //cA.expresionRegularToAutomata("a.b+|c*");
+     //System.out.println(cA.expresionRegularToAutomata("(a.b|a*.c)+").getAlfabeto().contains(""));
+ //     System.out.println(cA.expresionRegularToAutomata("a.b"));
+     /*
+     Subconjunto nuevo=new Subconjunto("1");
+     nuevo.getKernel().add("a");
+     nuevo.getKernel().add("b");
+     nuevo.getCerradura().add("c");
+     nuevo.getCerradura().add("d");
+
+     Subconjunto auxiliar=new Subconjunto("6");
+     auxiliar.getKernel().add("a");
+     auxiliar.getKernel().add("b");
+     auxiliar.getCerradura().add("c");
+     auxiliar.getCerradura().add("d");
+
+     Subconjunto w=new Subconjunto("8");
+     w.getKernel().add("a");
+     w.getKernel().add("b");
+     w.getCerradura().add("c");
+     w.getCerradura().add("d");
+
+
+     LinkedList<Subconjunto> pruebaStack=new LinkedList<>();
+     pruebaStack.push(nuevo);
+
+     ContructorAFNtoAFD buscador= new ContructorAFNtoAFD();
+
+    Stack<Subconjunto> n =new Stack<>();
+
+    n.push(auxiliar);
+
+
+
+
+     //System.out.println(n.contains(w));
+    // System.out.println(n.size());
+
+*/
+     //subconjunto.
+     ContructorAFNtoAFD construye = new ContructorAFNtoAFD();
+ Automata a=cA.expresionRegularToAutomata("(a.b|a*.c)+");
+     System.out.println(a);
+     System.out.println("-----------------______--------------");
+
+    System.out.println(construye.convertAFNtoAFD( a));
+/*
+    Stack<Integer> stack= new Stack<Integer>();
+    stack.push(1);
+     stack.push(2);
+     stack.push(3);
+     stack.push(4);
+
+     while (!stack.isEmpty()){
+      stack.add(6);
+      System.out.println(stack.pop());
+
+     }
+
+*/
+
+
     }
 }

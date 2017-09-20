@@ -46,46 +46,6 @@ public class ContructorAFNtoAFD {
         automataResultante.addEstadoInicial(inicial.getEstado());
         inicial.getCerradura().add(srcAutomata.getEstadoInicial().getClave());
         estadosPorProcesarStack.addFirst(inicial);
-
-        /*/motivos educativos XD
-        System.out.println("Primer proceso");
-
-        System.out.println("Inicial:"+inicial.getKernel() +"  "+ inicial.getCerradura()+"\n");
-
-        System.out.println("Iteraciones\n ");
-
-        Subconjunto prueba =cerraduraEpsilon(mover(Integer.toString(++contadorEstadosAutoR),inicial,"a",srcAutomata),srcAutomata);
-        System.out.println(prueba.getKernel() +"  "+ prueba.getCerradura()+"\n");
-
-         prueba =cerraduraEpsilon(mover(Integer.toString(++contadorEstadosAutoR),inicial,"b",srcAutomata),srcAutomata);
-        System.out.println(prueba.getKernel() +"  "+ prueba.getCerradura()+"\n");
-
-
-        prueba =cerraduraEpsilon(mover(Integer.toString(++contadorEstadosAutoR),inicial,"c",srcAutomata),srcAutomata);
-        System.out.println("");
-        System.out.println(prueba.getKernel() +"  "+ prueba.getCerradura()+"\n");
-
-
-        System.out.println("Segundo proceso");
-        Subconjunto B =cerraduraEpsilon(mover("1",inicial,"a",srcAutomata),srcAutomata);
-
-        System.out.println("Inicial:"+B.getKernel() +"  "+ B.getCerradura()+"\n");
-
-        System.out.println("Iteraciones\n ");
-
-        // prueba =cerraduraEpsilon(mover(Integer.toString(++contadorEstadosAutoR),B,"a",srcAutomata),srcAutomata);
-        //System.out.println(prueba.getKernel() +"  "+ prueba.getCerradura()+"\n");
-        System.out.println("Normal\n ");
-        prueba =cerraduraEpsilon(mover(Integer.toString(++contadorEstadosAutoR),B,"b",srcAutomata),srcAutomata);
-        System.out.println(prueba.getKernel() +"  "+ prueba.getCerradura()+"\n");
-
-        //prueba =cerraduraEpsilon(mover(Integer.toString(++contadorEstadosAutoR),B,"c",srcAutomata),srcAutomata);
-        //System.out.println(prueba.getKernel() +"  "+ prueba.getCerradura()+"\n");
-//*/
-
-
-
-
         Subconjunto procesandose;
         Subconjunto iteracion;
         /**
@@ -115,7 +75,7 @@ public class ContructorAFNtoAFD {
                             System.out.println("!!!!!___Se añadio la transicion  "+simbolo);
                             System.out.println(procesandose.getEstado().getClave()+" -"+simbolo+"-> "+iteracion.getEstado().getClave());
                             System.out.println(iteracion.getKernel() +"  "+ iteracion.getCerradura()+"\n");
-                            automataResultante.addTransicion(procesandose.getEstado(),iteracion.getEstado(),simbolo);
+                            automataResultante.addTransicion(procesandose.getEstado(),estadosPorProcesarStack.get(estadosPorProcesarStack.indexOf(iteracion)).getEstado(),simbolo);
                         }else if(estadosProcesados.contains(iteracion)){
                             if(iteracion.equals(procesandose)){
                                 System.out.println("''''''___Se añadio la transicion  " + simbolo);

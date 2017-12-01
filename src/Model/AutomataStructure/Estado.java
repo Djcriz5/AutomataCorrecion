@@ -35,10 +35,7 @@ public class Estado {
         if(this.esFinal && cadena.length()==0){
             this.aceptaCadena=true;
             System.out.println("\n******cadena aceptada Estamos en : "+clave+"*************\n");
-
-
             //    System.out.println("Hilos activos: "+Thread.activeCount());
-
              /* qif(this.tieneTransicionesEpsilon()){
                 //TODO  do something (bucle infinito)
             }else{
@@ -47,7 +44,6 @@ public class Estado {
             // hilosDeBifurcacion.list();
             // hilosDeBifurcacion.stop();
             // System.exit(0);
-
         }else{
             if(cadena.length()>0){
                 Transicion buscada=buscarTransicion(cadena.substring(0,1));
@@ -176,9 +172,6 @@ public class Estado {
         //solucion temporal solo checa si  el nombre es el mismo pero relamente debria ver si las transiciones son las mismas tambien
     @Override
     public boolean equals(Object obj) {
-        if (this.clave.equals(((Estado) obj).getClave()))
-            return true;
-        else
-            return false;
+        return this.clave.equals(((Estado) obj).getClave());
     }
 }

@@ -125,12 +125,12 @@ public class ConstructorDeAutomatas {
      ***/
     public Automata aUnion(Automata automataDeEntradaIzq,Automata automataDeEntradaDer){
         Automata automataResultante=new Automata();
-        contador++;//incrementando el numero de estados para no repetir nombres
-        Estado nuevoInicial=new Estado(Integer.toString(contador));
+       //incrementando el numero de estados para no repetir nombres
+        Estado nuevoInicial=new Estado(Integer.toString(++contador));
         nuevoInicial.addTransicion(automataDeEntradaIzq.getEstadoInicial(),"");
         nuevoInicial.addTransicion(automataDeEntradaDer.getEstadoInicial(),"");
-        contador++;//incrementando el numero de estados para no repetir nombres
-        Estado nuevoFinal =new Estado(Integer.toString(contador),true);
+      //incrementando el numero de estados para no repetir nombres
+        Estado nuevoFinal =new Estado(Integer.toString(++contador),true);
         this.getEstadoFinal(automataDeEntradaIzq).addTransicion(nuevoFinal,"");
         this.getEstadoFinal(automataDeEntradaDer).addTransicion(nuevoFinal,"");
         this.getEstadoFinal(automataDeEntradaIzq).setEsFinal(false);

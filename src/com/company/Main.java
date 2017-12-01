@@ -88,7 +88,7 @@ public class Main {
         //System.out.println("_-------------------_");
 
        // System.out.println(c);
-        ConstructorDeAutomatas cA=new ConstructorDeAutomatas();
+        //ConstructorDeAutomatas cA=new ConstructorDeAutomatas();
 
        // System.out.println("_-------------------_");
         //System.out.println(cA.aPlus(b));
@@ -138,26 +138,18 @@ public class Main {
 */
      //subconjunto.
      ContructorAFNtoAFD construye = new ContructorAFNtoAFD();
- Automata a=cA.expresionRegularToAutomata("(a.b|a*.c)+");
+
+     Automata a=new ConstructorDeAutomatas().expresionRegularToAutomata("(a.b|a*.c)+");
      System.out.println(a);
-     System.out.println("-----------------______--------------");
+     System.out.println("<><><><><><><><><><><><><><><><><><><><>");
 
     System.out.println(construye.convertAFNtoAFD( a));
-/*
-    Stack<Integer> stack= new Stack<Integer>();
-    stack.push(1);
-     stack.push(2);
-     stack.push(3);
-     stack.push(4);
+    /*/
 
-     while (!stack.isEmpty()){
-      stack.add(6);
-      System.out.println(stack.pop());
 
      }
 
 */
-
 
     }
 }
